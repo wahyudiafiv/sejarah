@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Soal & Lembar Jawaban Sejarah Fase E</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f9; max-width: 800px; margin: auto; }
+        h1 { text-align: center; color: #1a252f; }
+        .identitas-box { background: #eef2f5; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #dcdfe3; }
+        .identitas-box label { font-weight: bold; display: block; margin-bottom: 5px; }
+        .identitas-box input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1em; }
+        .card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+        .kategori { font-weight: bold; color: #007bff; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; }
+        .soal { margin-top: 10px; font-size: 1.05em; color: #2c3e50; font-weight: 500; }
+        textarea { width: 100%; height: 80px; margin-top: 12px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; resize: vertical; }
+        button { background-color: #28a745; color: white; border: none; padding: 10px 18px; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 0.95em; font-weight: bold; }
+        button:hover { background-color: #218838; }
+        button:disabled { background-color: #6c757d; cursor: not-allowed; }
+        .status-msg { margin-top: 8px; font-weight: bold; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <h1>Lembar Kerja Sejarah Fase E</h1>
+
+    <div class="identitas-box">
+        <label for="namaSiswa">Nama Lengkap Siswa:</label>
+        <input type="text" id="namaSiswa" placeholder="Masukkan nama Anda sebelum menjawab..." required>
+    </div>
+
+    <div id="container-soal"></div>
+
+    <script>
+        // PASTE URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_u-3luUIi91u5jG_nvGCivS7KBtiR28cQeSrF7r73PTKnqS7qVttNRMrSNuMS1gga/exec";
+
+        const dataSoal = [
+          {
+            "kategori": "Manusia, Ruang, dan Waktu",
+            "nomor": 1,
+            "soal": "Seorang sejarawan meneliti dampak letusan Gunung Tambora tahun 1815 terhadap perubahan sosial-ekonomi masyarakat lokal di Pulau Sumbawa. Dalam penelitian ini, letusan gunung dan wilayah Sumbawa merupakan unsur ruang, sementara tahun 1815 adalah unsur waktu. Bagaimanakah kedudukan dan peran manusia dalam peristiwa sejarah tersebut?"
+          },
+          {
+            "kategori": "Manusia, Ruang, dan Waktu",
+            "nomor": 2,
+            "soal": "Pada tahun 1945, Soekarno dan Hatta memproklamasikan kemerdekaan Indonesia di Jalan Pegangsaan Timur No. 56, Jakarta. Jika lokasi pengetikan naskah dialihkan ke tempat lain namun pelakunya tetap sama, apakah peristiwa tersebut masih memiliki makna sejarah yang sama bagi bangsa Indonesia? Jelaskan alasan keterikatan antara manusia, ruang, dan waktu!"
+          },
+          {
+            "kategori": "Manusia, Ruang, dan Waktu",
+            "nomor": 3,
+            "soal": "Masyarakat di daerah pesisir pantai Lampung membangun sistem perdagangan komoditas lada yang sangat aktif pada abad ke-17 karena posisinya yang strategis di Selat Sunda. Berdasarkan kasus tersebut, bagaimanakah kondisi lingkungan geografis (ruang) memengaruhi aktivitas dan pola hidup manusia pada dimensi waktu tersebut?"
+          },
+          {
+            "kategori": "Manusia, Ruang, dan Waktu",
+            "nomor": 4,
+            "soal": "Konflik pertanahan terjadi di suatu wilayah akibat perbedaan klaim batas administrasi antara peta peta kolonial tahun 1920 dengan peta wilayah modern saat ini. Mengapa dinamika aktivitas manusia di masa lalu dapat memicu timbulnya permasalahan di ruang dan waktu masa kini?"
+          },
+          {
+            "kategori": "Manusia, Ruang, dan Waktu",
+            "nomor": 5,
+            "soal": "Sebuah desa terpencil mengalami perubahan struktur sosial secara dramatis setelah masuknya jaringan jalan raya nasional pada tahun 2010. Analisislah bagaimana perubahan keterjangkauan ruang dapat mengubah perilaku dan pola interaksi manusia dalam kurun waktu tertentu!"
+          },
+          {
+            "kategori": "Dimensi Waktu dalam Sejarah",
+            "nomor": 1,
+            "soal": "Sistem perpolitikan di Indonesia mengalami pergantian dari Orde Lama, Orde Baru, hingga Masa Reformasi. Namun, praktik budaya politik kekerabatan dalam pemilihan lokal masih terus ditemukan. Fenomena ini menunjukkan adanya dua konsep dimensi waktu secara bersamaan, yaitu..."
+          },
+          {
+            "kategori": "Dimensi Waktu dalam Sejarah",
+            "nomor": 2,
+            "soal": "Pada tahun 1998 terjadi gelombang demonstrasi mahasiswa secara masif yang menyebabkan jatuhnya pemerintahan Orde Baru dalam waktu singkat. Peristiwa peralihan kekuasaan yang cepat dan mendasar ini termasuk dalam konsep dimensi waktu..."
+          },
+          {
+            "kategori": "Dimensi Waktu dalam Sejarah",
+            "nomor": 3,
+            "soal": "Tradisi mudik lebaran pada masyarakat Indonesia telah berlangsung sejak puluhan tahun lalu dan terus berulang setiap tahunnya dengan pola mobilitas massa yang serupa. Mengapa fenomena mudik ini dikategorikan sebagai konsep 'pengulangan' dalam dimensi waktu sejarah?"
+          },
+          {
+            "kategori": "Dimensi Waktu dalam Sejarah",
+            "nomor": 4,
+            "soal": "Pemerintah kolonial Belanda menerapkan sistem Tanam Paksa (Cultuurstelsel) pada tahun 1830 yang berangsur-angsur berkembang menjadi sistem ekonomi liberal pada tahun 1870. Progres pola kebijakan ekonomi ini mencerminkan konsep dimensi waktu..."
+          },
+          {
+            "kategori": "Dimensi Waktu dalam Sejarah",
+            "nomor": 5,
+            "soal": "Seorang peneliti mengamati bahwa bentuk bangunan rumah adat di suatu daerah tidak mengalami perubahan struktur utama selama tiga abad, meskipun masyarakatnya sudah mengadopsi teknologi modern. Fenomena ketahanan struktur budaya ini disebut sebagai..."
+          },
+          {
+            "kategori": "Diakronis dan Sinkronis",
+            "nomor": 1,
+            "soal": "Seorang peneliti menyusun buku mengenai kronologi Pertempuran Surabaya mulai dari insiden Hotel Yamato pada September 1945, terbunuhnya Mallaby di bulan Oktober, hingga puncaknya pertempuran 10 November 1945. Pendekatan berpikir yang digunakan peneliti tersebut adalah..."
+          },
+          {
+            "kategori": "Diakronis dan Sinkronis",
+            "nomor": 2,
+            "soal": "Seorang sosiolog meneliti kondisi ekonomi, struktur sosial, tingkat pendidikan, dan sistem keagamaan masyarakat Kota Surakarta khusus pada tahun 1965 secara mendalam tanpa membahas periode sebelum atau sesudahnya. Jenis pendekatan berpikir sejarah yang diterapkan adalah..."
+          },
+          {
+            "kategori": "Diakronis dan Sinkronis",
+            "nomor": 3,
+            "soal": "Apabila Anda ingin menganalisis dampak krisis moneter tahun 1998 terhadap sektor perbankan, kondisi psikologis masyarakat, dan stabilitas politik secara meluas pada tahun tersebut, bagaimanakah cara memadukan cara berpikir diakronis dan sinkronis?"
+          },
+          {
+            "kategori": "Diakronis dan Sinkronis",
+            "nomor": 4,
+            "soal": "Buku tulisan Sartono Kartodirdjo mengenai Pemberontakan Petani Banten 1888 mengkaji secara mendalam aspek sosiologi, agama, dan ekonomi para petani pada saat peristiwa terjadi. Mengapa karya sejarah ini dianggap menggunakan pendekatan sinkronis (multidimensional)?"
+          },
+          {
+            "kategori": "Diakronis dan Sinkronis",
+            "nomor": 5,
+            "soal": "Siswa kelas 10 diminta membuat garis waktu (timeline) perkembangan kerajaan-kerajaan Islam di Nusantara mulai dari Samudera Pasai hingga Kesultanan Mataram. Pendekatan apakah yang paling dominan digunakan dalam tugas pembuatan garis waktu tersebut?"
+          },
+          {
+            "kategori": "Sumber Sejarah",
+            "nomor": 1,
+            "soal": "Tim peneliti menemukan lembaran kertas kusam di gudang arsip sekolah yang diklaim sebagai 'Nota Pembelian Bahan Bangunan Gedung Pertama Sekolah Tahun 1980'. Namun, di bagian atas nota tersebut memuat alamat email dan nomor WhatsApp toko. Berdasarkan uji kritik sumber, apa kesimpulan mengenai keaslian dan kredibilitas nota tersebut?"
+          },
+          {
+            "kategori": "Sumber Sejarah",
+            "nomor": 2,
+            "soal": "Seorang siswa mengutip fakta sejarah dari sebuah buku biografi tokoh nasional yang diterbitkan pada tahun 2021. Penulis buku tersebut bukanlah saksi mata peristiwa, melainkan akademisi yang mengolah berbagai catatan arsip resmi. Berdasarkan sifatnya, buku biografi tersebut tergolong ke dalam sumber..."
+          },
+          {
+            "kategori": "Sumber Sejarah",
+            "nomor": 3,
+            "soal": "Seorang peneliti sejarah melakukan wawancara dengan seorang veteran pejuang Kemerdekaan yang kini berusia 95 tahun. Masing-masing keterangan veteran tersebut dikroscek dengan dokumen tertulis milik tentara Belanda. Mengapa tahap kritik internal sangat krusial dilakukan terhadap sumber lisan dari pelaku sejarah yang sudah lanjut usia?"
+          },
+          {
+            "kategori": "Sumber Sejarah",
+            "nomor": 4,
+            "soal": "Di area penggalian situs purbakala, ditemukan koin tembaga dengan ukiran huruf Arab-Melayu. Mengapa koin tersebut tergolong sebagai sumber primer sekaligus sumber benda dan tulisan?"
+          },
+          {
+            "kategori": "Sumber Sejarah",
+            "nomor": 5,
+            "soal": "Beredar sebuah utas (thread) di media sosial yang mengklaim temuan fakta baru mengenai peristiwa 1945 tanpa mencantumkan referensi buku, foto arsip, maupun dokumen pendukung. Mengapa informasi dari utas tersebut gugur dalam tahap verifikasi/kritik sumber sejarah?"
+          }
+        ];
+
+        const container = document.getElementById('container-soal');
+
+        dataSoal.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="kategori">${item.kategori} - Soal #${item.nomor}</div>
+                <div class="soal">${index + 1}. ${item.soal}</div>
+                <textarea id="jawab-${index}" placeholder="Tuliskan jawaban Anda secara rinci di sini..."></textarea>
+                <button onclick="kirimJawaban(${index}, '${item.kategori}', ${item.nomor}, this)">Kirim Jawaban Nomor ${index + 1}</button>
+                <div id="status-${index}" class="status-msg"></div>
+            `;
+            container.appendChild(card);
+        });
+
+        function kirimJawaban(index, kategori, nomor, btnElement) {
+            const nama = document.getElementById('namaSiswa').value.trim();
+            const jawaban = document.getElementById(`jawab-${index}`).value.trim();
+            const statusDiv = document.getElementById(`status-${index}`);
+
+            if (!nama) {
+                alert("Harap isi Nama Lengkap terlebih dahulu di bagian atas halaman!");
+                document.getElementById('namaSiswa').focus();
+                return;
+            }
+
+            if (!jawaban) {
+                alert("Harap isi jawaban Anda sebelum mengirim!");
+                return;
+            }
+
+            btnElement.disabled = true;
+            statusDiv.style.color = "#888";
+            statusDiv.innerText = "Mengirim jawaban...";
+
+            const payload = {
+                nama: nama,
+                nomor: nomor,
+                kategori: kategori,
+                jawaban: jawaban
+            };
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                statusDiv.style.color = "green";
+                statusDiv.innerText = "✓ Terkirim ke Google Sheets Bapak/Ibu Guru!";
+                btnElement.innerText = "Terkirim";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                statusDiv.style.color = "red";
+                statusDiv.innerText = "Gagal mengirim. Coba lagi.";
+                btnElement.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
